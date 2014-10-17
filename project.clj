@@ -2,13 +2,13 @@
   :plugins [[lein-cljsbuild "1.0.3"]]
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src"]
-                        :compiler {:output-to "../www/js/gen/dev.js"
-                                   :output-dir "../www/js/gen"
+                        :compiler {:output-to "resources/public/js/gen/dev.js"
+                                   :output-dir "resources/public/js/gen"
                                    :optimizations :none
                                    :source-map true}}
                        {:id "release"
                         :source-paths ["src"]
-                        :compiler {:output-to "../www/js/gen/release.js"
+                        :compiler {:output-to "resources/public/js/gen/release.js"
                                    :optimizations :advanced
                                    :pretty-print false
                                    :preamble ["react/react.min.js"]

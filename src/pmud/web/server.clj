@@ -20,11 +20,13 @@
 (log/set-level! :debug)
 (log/debug :pmud.server :begin)
 
-(defroutes routes
-  (let [home-page (slurp (io/resource "public/index.html"))
-        not-found-page (slurp (io/resource "public/404.html"))]
+(let [home-page (slurp (io/resource "public/index.html"))
+      not-found-page (slurp (io/resource "public/404.html"))]
+  (log/debug :home-page home-page)
+  (defroutes routes
     (GET "/" [] home-page)
     (GET "/abc" [] home-page)
+    (route/resources "/")
     (route/not-found not-found-page)))
 
 (def site
