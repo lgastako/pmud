@@ -1,6 +1,7 @@
 (ns pmud.web.server
   (:gen-class)
   (:require [clojure.core.async :refer [go]]
+            [clojure.java.io :as io]
             [compojure.core :refer [defroutes GET]]
             [compojure.route :as route]
             [environ.core :refer [env]]
@@ -20,8 +21,11 @@
 (log/debug :pmud.server :begin)
 
 (defroutes routes
-  (GET "/" [] "<h1>Hello World</h1>")
-  (route/not-found "<h1>Page not found</h1>"))
+  (let [home-page (slurp (io/resource "public/index.html"))
+        not-found-page (slurp (io/resource "public/404.html"))]
+    (GET "/" [] home-page)
+    (GET "/abc" [] home-page)
+    (route/not-found not-found-page)))
 
 (def site
   (-> routes
