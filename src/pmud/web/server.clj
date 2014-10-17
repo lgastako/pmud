@@ -1,6 +1,8 @@
-(ns pmud.server
+(ns pmud.web.server
   (:gen-class)
   (:require [clojure.core.async :refer [go]]
+            [compojure.core :refer [defroutes GET]]
+            [compojure.route :as route]
             [environ.core :refer [env]]
             [its.log :as log]
             [org.httpkit.server :as kit]
@@ -17,6 +19,10 @@
 (log/set-level! :debug)
 (log/debug :pmud.server :begin)
 
+(defroutes routes
+  (GET "/" [] "<h1>Hello World</h1>")
+  (route/not-found "<h1>Page not found</h1>"))
+
 (def site
   (-> routes
       (wrap-json-with-padding)
@@ -30,8 +36,7 @@
       (wrap-reload)))
 
 (defn serve [port]
-  (let [killswitch (kit/run-server #'site {:port port})]
-    {:killswitch killswitch}))
+  (kit/run-server #'site {:port port}))
 
 (defn -main [& args]
   (let [argc (count args)]

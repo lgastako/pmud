@@ -1,3 +1,5 @@
+APP_PORT=1998
+
 all:
 	@cat Makefile
 
@@ -23,13 +25,16 @@ ck:
 	lein check
 
 o:
-	open http://localhost:${APP_PORT}/
+	open http://localhost:$(APP_PORT)/
 
 r:
-	lein run ${APP_PORT}
+	lein run $(APP_PORT)
 
 s:
 	vagrant ssh
+
+t:
+	lein test
 
 tr:
 	lein trampoline cljsbuild repl-listen

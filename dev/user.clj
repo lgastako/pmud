@@ -15,26 +15,31 @@
             [clojure.string :as str]
             [clojure.test :as test]
             [clojure.tools.namespace.repl :refer [refresh refresh-all]]
-            [test1]))
+            [its.log :as log]
+            [pmud.web.server :as server]))
 
 (def system
   "A Var containing an object representing the application under development."
   nil)
 
 (defn init
-  "Creates and initializes the system under development in the Var #'system."
+  "Creates and initializes the system under development in the atom #'system."
   []
-  (set! system {:state :initialized}))
+  (def system {:state :initialized}))
 
 (defn start
-  "Starts the system running, updates the Var #'system."
+  "Starts the system running, updates the atom #'system."
   []
-  (set! system (merge system (server.serve 1999) {:state :started})))
+  (def system
+    (merge system
+           {:killswitch (server/serve 1999)}
+           {:state :started})))
 
 (defn stop
-  "Stops the system if it is currently running, updates the Var #'system."
+  "Stops the system if it is currently running, updates the atom #'system."
   []
-  (let [killswitch (:killswitch system)]
+  (log/debug :stopping {:system system})
+  (when-let [killswitch (:killswitch system)]
     (killswitch)))
 
 (defn go
