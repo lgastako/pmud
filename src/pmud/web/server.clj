@@ -20,7 +20,11 @@
 (log/set-level! :debug)
 (log/debug :pmud.server :begin)
 
-(let [home-page (slurp (io/resource "public/index.html"))
+(def PRODUCTION false)
+
+(let [home-page (slurp (io/resource (if PRODUCTION
+                                      "public/index-prod.html"
+                                      "public/index-dev.html")))
       not-found-page (slurp (io/resource "public/404.html"))]
   (log/debug :home-page home-page)
   (defroutes routes
