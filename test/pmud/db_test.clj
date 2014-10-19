@@ -1,4 +1,4 @@
-(ns pmud.db-demo
+(ns pmud.db-test
   (:require [clojure.test :refer :all]
             [its.log :as log]
             [pmud.db :as db]))
@@ -10,11 +10,6 @@
         id1 (:id n1)
         n2 (db/get-node id1)
         id2 (:id n2)]
-    (log/debug {:type type
-                :n1 n1
-                :id1 id1
-                :n2 n2
-                :id2 id2})
     (is (= id1 id2 ))
     (is (= "bar" (:foo (:data n1))))
     (is (= "bar" (:foo (:data n2))))
@@ -22,3 +17,5 @@
     (is (nil? (db/get-node id1)))))
 
 (run-tests)
+
+
