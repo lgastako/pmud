@@ -18,9 +18,9 @@
    :history [HistoryEntry]})
 
 (defn make-app []
-  (atom (s/validate Application {:username nil
-                                 :input nil
-                                 :history [{:description "Welcome to pmud."}]})))
+  (s/validate Application {:username nil
+                           :input nil
+                           :history [{:description "Welcome to pmud."}]}))
 
 (defn init []
   (let [app (atom (make-app))]
