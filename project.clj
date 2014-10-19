@@ -31,6 +31,7 @@
                  [org.clojars.mikejs/ring-gzip-middleware "0.1.0-SNAPSHOT"]
                  [http-kit "2.1.19"]
                  [compojure "1.2.0"]
+                 [prismatic/dommy "1.0.0"]
                  [om "0.7.3"]
                  [racehub/om-bootstrap "0.3.1"]
                  [sablono "0.2.22"]])

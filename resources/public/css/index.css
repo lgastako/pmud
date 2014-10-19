@@ -10,9 +10,17 @@
     margin-top: 0.25em;
     background-color: wheat;
     border: none;
+    resize: none;
 }
 
 .prompt {
     float: left;
     padding-right: 0.25em;
+    padding-top: 0.25em;
+    zoom: 75%;
+}
+
+/* Remove the glow around text areas */
+*:focus {
+    outline: 0px none transparent;
 }
