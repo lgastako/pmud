@@ -1,13 +1,12 @@
 (ns pmud.web.views
   (:require [dommy.core :as d :include-macros true]
+            [goog.string :as gstring]
             [om.core :as om :include-macros true]
             [its.log :as log]
             [pmud.web :as web]))
 
 
-(defn history-entry-view [entry owner]
-  (log/debug :history-entry-view {:entry entry})
-  (web/view [:li.entry [:p (:description entry)]]))
+(defn now [] (js/Date.))
 
 (defn enter-key? [evt]
   (= 13 (.-charCode evt)))
@@ -17,14 +16,29 @@
   (set! (.-value el) " ")
   (set! (.-value el) ""))
 
+(defn history-entry-view [entry owner]
+  (log/debug :history-entry-view {:entry entry})
+  (let [{ts :timestamp d :description} entry]
+    (log/debug :hev-dbg {:ts ts :desc d :entry entry})
+    (web/view [:li.entry [:p [:span.timestamp (.toJSON ts)] d]])))
+
+(defn execute-command [app cmd]
+  (log/debug :execute-command {:cmd cmd}))
+
+(defn mk-hist [t d]
+  {:type t
+   :description d
+   :timestamp (now)})
+
 (defn submit-command [app event]
   (let [el (.-target event)
         v (.-value el)
-        cmd-entry {:description (str "USER TYPED: " v)}]
+        cmd-entry (mk-hist :cmd (str "User " (gstring/unescapeEntities "&rArr;") " " v))]
     (clear-value! el)
     (log/debug :submit-command {:el el :v v})
     (om/transact! app [:history] #(cons cmd-entry %))
     (log/debug :updated {:app @app})
+    (execute-command app v)
     (.preventDefault event)
     false))
 

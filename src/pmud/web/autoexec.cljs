@@ -1,7 +1,7 @@
 (ns pmud.web.autoexec
   (:require [its.log :as log]
             [om.core :as om :include-macros true]
-            [pmud.web.views :refer [main-view]]
+            [pmud.web.views :refer [main-view mk-hist]]
             [schema.core :as s :include-macros true]))
 
 (log/set-level! :debug)
@@ -20,7 +20,7 @@
 (defn make-app []
   (s/validate Application {:username nil
                            :input nil
-                           :history [{:description "Welcome to pmud."}]}))
+                           :history [(mk-hist :info "Welcome to pmud.")]}))
 
 (defn init []
   (let [app (atom (make-app))]

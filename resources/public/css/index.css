@@ -24,3 +24,12 @@
 *:focus {
     outline: 0px none transparent;
 }
+
+li.entry {
+    list-style-type: none;
+}
+
+.entry .timestamp {
+    padding-left: 0.25em;
+    padding-right: 1em;
+}
